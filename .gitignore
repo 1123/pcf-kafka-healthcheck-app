@@ -1,0 +1,9 @@
+target/
+src/main/resources/application-benediktcloud.properties
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
