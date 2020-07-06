@@ -4,7 +4,25 @@ applications:
   timeout: 180
   env:
     JBP_CONFIG_OPEN_JDK_JRE: "{ jre: { version: 11.+ }, memory_calculator: { stack_threads: 25 } }"
-    SPRING_PROFILES_ACTIVE: benediktcloud
+
+    BOOTSTRAP_SERVERS_1: 
+    SECURITY_PROTOCOL_1: SASL_SSL
+    SASL_JAAS_CONFIG_1: 'org.apache.kafka.common.security.plain.PlainLoginModule required username="" password="";'
+    ENDPOINT_ID_ALGORITHM_1: 'https'
+    SASL_MECHANISM_1: 'PLAIN'
+
+    BOOTSTRAP_SERVERS_2: pkc-43n10.us-central1.gcp.confluent.cloud:9092
+    SECURITY_PROTOCOL_2: SASL_SSL
+    SASL_JAAS_CONFIG_2: 
+    ENDPOINT_ID_ALGORITHM_2: 'https'
+    SASL_MECHANISM_2: 'PLAIN'
+
+    BOOTSTRAP_SERVERS_3: localhost:9092
+    SECURITY_PROTOCOL_3: PLAINTEXT
+    SASL_JAAS_CONFIG_3:
+    ENDPOINT_ID_ALGORITHM_3:
+    SASL_MECHANISM_3:
+
   instances: 1
   memory: 1G
   path: target/pcf-kafka-healthcheck-0.0.1-SNAPSHOT.jar

@@ -1,5 +1,4 @@
 target/
-src/main/resources/application-benediktcloud.properties
 
 ### IntelliJ IDEA ###
 .idea
@@ -7,3 +6,5 @@ src/main/resources/application-benediktcloud.properties
 *.iml
 *.ipr
 
+envs/benedikt.env
+manifest-benedikt.yaml
