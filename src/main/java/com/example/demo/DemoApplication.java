@@ -1,28 +1,22 @@
 package com.example.demo;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.util.concurrent.ListenableFuture;
 
-import java.util.concurrent.ExecutionException;
-
 @Slf4j
 @EnableKafka
 @EnableScheduling
 @SpringBootApplication
-public class DemoApplication implements CommandLineRunner {
+public class DemoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
@@ -40,10 +34,6 @@ public class DemoApplication implements CommandLineRunner {
 	@Value("${healthcheck-topic}")
 	private String topic;
 
-	@Override
-	public void run(String... args) {
-	}
-
 	@Scheduled(fixedDelay = 1000)
 	public void healthCheck() {
 		log.info("Checking health of listener1");
@@ -55,9 +45,8 @@ public class DemoApplication implements CommandLineRunner {
 	}
 
 	private void healthCheckForListener(KafkaTemplate<String, String> kafkaTemplate) {
-		log.info("Doing healthcheck");
-		log.info(kafkaTemplate.getProducerFactory().getConfigurationProperties().toString());
-		ListenableFuture<SendResult<String, String>> result = kafkaTemplate.send(topic, "foo1");
+		log.info("Health check for listener {}", kafkaTemplate.getProducerFactory().getConfigurationProperties().toString());
+		ListenableFuture<SendResult<String, String>> result = kafkaTemplate.send(topic, "" + System.currentTimeMillis());
 		try {
 			result.get();
 			log.info("healthcheck succeeded");
@@ -65,9 +54,7 @@ public class DemoApplication implements CommandLineRunner {
 			log.warn("healthcheck failed");
 			log.info(e.getMessage());
 		}
-
 	}
-
 
 }
 

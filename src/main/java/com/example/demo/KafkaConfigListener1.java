@@ -15,6 +15,10 @@ import java.util.Map;
 public class KafkaConfigListener1 {
 
     @Bean
+    public KafkaTemplate<String, String> kafkaTemplateListener1() {
+        return new KafkaTemplate<>(producerFactoryListener1());
+    }
+
     public Map<String, Object> producerConfigsListener1() {
         Map<String, Object> props = new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, System.getenv("BOOTSTRAP_SERVERS_1"));
@@ -30,15 +34,8 @@ public class KafkaConfigListener1 {
         return props;
     }
 
-    @Bean
-    public KafkaTemplate<String, String> kafkaTemplateListener1() {
-        return new KafkaTemplate<>(producerFactoryListener1());
-    }
-
-    @Bean
     public ProducerFactory<String, String> producerFactoryListener1() {
         return new DefaultKafkaProducerFactory<>(producerConfigsListener1());
     }
-
 
 }
